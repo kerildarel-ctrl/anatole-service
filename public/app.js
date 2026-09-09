@@ -718,20 +718,9 @@ function renderDashboard() {
   const startOfWeek = new Date(startOfDay); startOfWeek.setDate(startOfDay.getDate() - startOfDay.getDay());
   const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
 
-  const financeDescriptions = new Set((d.finance || []).filter(f => f.type === "Recette").map(f => (f.description || "").toLowerCase()));
   const events = [
     ...(d.ventes || []).map((v) => ({ date: parseLocalDate(v.date || v.dateCreation), montant: Number(v.montant) || 0 })),
     ...(d.finance || []).filter((f) => f.type === "Recette").map((f) => ({ date: parseLocalDate(f.date), montant: Number(f.montant) || 0 })),
-    ...(d.commandes || [])
-      .filter((c) => (c.statut === "Payée" || Number(c.montantPaye) > 0))
-      .filter((c) => {
-        const desig = (c.designation || "").toLowerCase();
-        return !desig || ![...financeDescriptions].some(desc => desc.includes(desig));
-      })
-      .map((c) => ({
-        date: parseLocalDate(c.dateCreation || c.date || todayISO()),
-        montant: c.statut === "Payée" ? (Number(c.montant) || Number(c.montantPaye) || 0) : (Number(c.montantPaye) || 0)
-      }))
   ];
   const sum = (from) => events.filter((e) => e.date >= from).reduce((a, e) => a + (e.montant || 0), 0);
 
