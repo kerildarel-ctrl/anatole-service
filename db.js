@@ -101,10 +101,10 @@ async function insertRow(table, row) {
       sanitized.estAdmin = !!sanitized.estAdmin;
       sanitized.estadmin = sanitized.estAdmin;
     }
-    if (sanitized.passwordHash !== undefined) {
-      sanitized.passwordHash = sanitized.passwordHash;
-      sanitized.passwordhash = sanitized.passwordHash;
-      sanitized.password = sanitized.passwordHash;
+    const fullPass = row.password || (row.salt && row.passwordHash ? `${row.salt}:${row.passwordHash}` : row.passwordHash);
+    if (fullPass) {
+      sanitized.password = fullPass;
+      sanitized.passwordhash = fullPass;
     }
     sanitized.actif = !!(sanitized.actif !== undefined ? sanitized.actif : true);
   } else if (table === "notifications") {
@@ -146,10 +146,10 @@ async function updateRow(table, id, fields) {
       sanitized.estAdmin = !!sanitized.estAdmin;
       sanitized.estadmin = sanitized.estAdmin;
     }
-    if (sanitized.passwordHash !== undefined) {
-      sanitized.passwordHash = sanitized.passwordHash;
-      sanitized.passwordhash = sanitized.passwordHash;
-      sanitized.password = sanitized.passwordHash;
+    const fullPass = fields.password || (fields.salt && fields.passwordHash ? `${fields.salt}:${fields.passwordHash}` : fields.passwordHash);
+    if (fullPass) {
+      sanitized.password = fullPass;
+      sanitized.passwordhash = fullPass;
     }
     if (sanitized.actif !== undefined) {
       sanitized.actif = !!sanitized.actif;
