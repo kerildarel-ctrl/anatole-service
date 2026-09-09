@@ -1,0 +1,15 @@
+{
+  "name": "prestige-pro",
+  "version": "1.0.0",
+  "description": "Application de gestion d'entreprise - imprimerie & personnalisation (serveur local)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^13.0.2",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "serverless-http": "^4.0.0"
+  }
+}

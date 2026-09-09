@@ -1,0 +1,340 @@
+{
+  "clients": [],
+  "devis": [],
+  "commandes": [
+    {
+      "id": "ydomdrqo",
+      "clientId": "",
+      "designation": "Stylo",
+      "montant": 20000,
+      "montantPaye": 20000,
+      "dateLivraison": "2026-07-25",
+      "urgence": "Normal",
+      "statut": "Payée",
+      "dateCreation": "2026-07-25"
+    },
+    {
+      "id": "mlexd2ir",
+      "clientId": "",
+      "designation": "bache publicitaire",
+      "montant": 1222,
+      "montantPaye": 0,
+      "dateLivraison": "2026-07-25",
+      "urgence": "Normal",
+      "statut": "Payée",
+      "dateCreation": "2026-07-25"
+    },
+    {
+      "id": "s7dwbhkk",
+      "clientId": "",
+      "designation": "bache publicitaire",
+      "montant": 4500,
+      "montantPaye": 4500,
+      "dateLivraison": "2026-07-28",
+      "urgence": "Normal",
+      "statut": "Payée",
+      "dateCreation": "2026-07-28"
+    },
+    {
+      "id": "bajrxyuf",
+      "clientId": "",
+      "designation": "encre",
+      "montant": 10000,
+      "montantPaye": 10000,
+      "dateLivraison": "2026-07-28",
+      "urgence": "Normal",
+      "statut": "Payée",
+      "dateCreation": "2026-07-28"
+    }
+  ],
+  "stock": [
+    {
+      "id": "ds8g8bih",
+      "nom": "Stylo vert",
+      "quantite": 8,
+      "unite": "Pieces",
+      "seuil": 91,
+      "fournisseur": "Simplice"
+    }
+  ],
+  "mouvements": [
+    {
+      "id": "po3qg8dw",
+      "itemId": "ds8g8bih",
+      "type": "Sortie",
+      "quantite": 52,
+      "date": "2026-07-25"
+    },
+    {
+      "id": "ajhs62fa",
+      "itemId": "ds8g8bih",
+      "type": "Entrée",
+      "quantite": 90,
+      "date": "2026-07-25"
+    },
+    {
+      "id": "6psr93ug",
+      "itemId": "ds8g8bih",
+      "type": "Sortie",
+      "quantite": 120,
+      "date": "2026-07-25"
+    }
+  ],
+  "ventes": [],
+  "finance": [
+    {
+      "id": "iwe94bh7",
+      "type": "Dépense",
+      "description": "leo a pour la machine a impresssion",
+      "montant": 15000,
+      "date": "2026-07-25"
+    },
+    {
+      "id": "afsbd81v",
+      "type": "Recette",
+      "description": "pour les polos",
+      "montant": 150000,
+      "date": "2026-07-25"
+    },
+    {
+      "id": "lg2bbchv",
+      "type": "Dépense",
+      "description": "papeir",
+      "montant": 2000,
+      "date": "2026-07-28"
+    },
+    {
+      "id": "5pej3m89kuyr",
+      "type": "Recette",
+      "description": "Paiement commande : bache publicitaire",
+      "montant": 4500,
+      "date": "2026-07-30"
+    }
+  ],
+  "employes": [
+    {
+      "id": "ise7r17iqyi3",
+      "nom": "keril",
+      "identifiant": "kerildarell@gmail.com",
+      "salt": "d1eecf50a1c193f46feb7820e48448c2",
+      "passwordHash": "8266d0cecf7ba5edd280f49c5689d4352c38ada65fc63ff7c620d19bf45c876a49fc83d5259d5753de62f088cc133738587a8c17d14929ca8efb06d161d7e501",
+      "estAdmin": true,
+      "actif": true
+    },
+    {
+      "id": "3s2mkt8sgzpu",
+      "nom": "kousso",
+      "role": "Caisse",
+      "actif": true,
+      "estAdmin": false,
+      "identifiant": "kousso",
+      "salt": "c6edae361bd88c5b975d16bd4f536e6a",
+      "passwordHash": "6fd7356027a488d2192ca54daff99ea969883675897a3ec62b7449961edb4b0798c2b535a17476e0abb926fe08b96631b8e9910335309906359ae8602c14978e"
+    },
+    {
+      "id": "4w8rbq58ludx",
+      "nom": "kousso",
+      "role": "Standard",
+      "actif": true,
+      "identifiant": "keril",
+      "salt": "ec663fc34405f4e9fc46b93d3749b710",
+      "passwordHash": "1692d5f355fd493a06e1151bdd06659b4823a420f5416f1f1376623f03aa1bd73de4231adbfdb15112c2e43e1e1c6c20b3f788fa941cd4d7c5b5da46c155f4ff",
+      "estAdmin": false
+    }
+  ],
+  "presenceDate": "",
+  "notifications": [
+    {
+      "id": "4n1y2y22",
+      "text": "Nouvelle commande enregistrée : \"Stylo\"",
+      "date": "2026-07-25T07:41:30.953Z",
+      "lu": true
+    },
+    {
+      "id": "8dp6jcyx",
+      "text": "Commande \"Stylo\" passée en statut : Livré",
+      "date": "2026-07-25T07:41:48.635Z",
+      "lu": true
+    },
+    {
+      "id": "6bjx9j4g",
+      "text": "Commande \"Stylo\" passée en statut : En attente",
+      "date": "2026-07-25T07:41:53.448Z",
+      "lu": true
+    },
+    {
+      "id": "jnrq38ql",
+      "text": "Commande \"Stylo\" passée en statut : Prêt",
+      "date": "2026-07-25T07:42:12.954Z",
+      "lu": true
+    },
+    {
+      "id": "cob4eb5k",
+      "text": "Commande \"Stylo\" passée en statut : En finition",
+      "date": "2026-07-25T07:42:23.123Z",
+      "lu": true
+    },
+    {
+      "id": "pwsikkd9",
+      "text": "Commande \"Stylo\" passée en statut : Livré",
+      "date": "2026-07-25T07:42:29.432Z",
+      "lu": true
+    },
+    {
+      "id": "p0fugpuu",
+      "text": "Commande \"Stylo\" passée en statut : En attente",
+      "date": "2026-07-25T07:42:37.690Z",
+      "lu": true
+    },
+    {
+      "id": "bmradqoo",
+      "text": "Commande \"Stylo\" passée en statut : Livré",
+      "date": "2026-07-25T07:42:45.686Z",
+      "lu": true
+    },
+    {
+      "id": "2itpcn4w",
+      "text": "Commande \"Stylo\" passée en statut : En attente",
+      "date": "2026-07-25T07:43:01.240Z",
+      "lu": true
+    },
+    {
+      "id": "sgj93jzp",
+      "text": "Commande \"Stylo\" passée en statut : Livré",
+      "date": "2026-07-25T07:45:53.543Z",
+      "lu": true
+    },
+    {
+      "id": "1k8frfyx",
+      "text": "Alerte Stock : L'article \"Stylo vert\" est au niveau critique (8 restants)",
+      "date": "2026-07-25T07:47:23.624Z",
+      "lu": true
+    },
+    {
+      "id": "mcohp5ja",
+      "text": "Commande \"Stylo\" passée en statut : En attente",
+      "date": "2026-07-25T07:47:46.970Z",
+      "lu": true
+    },
+    {
+      "id": "6xcrtfn6",
+      "text": "Commande \"Stylo\" passée en statut : Livré",
+      "date": "2026-07-25T07:51:46.772Z",
+      "lu": true
+    },
+    {
+      "id": "aorhzxnk",
+      "text": "Commande \"Stylo\" passée en statut : En attente",
+      "date": "2026-07-25T07:51:58.933Z",
+      "lu": true
+    },
+    {
+      "id": "bu45p3y5",
+      "text": "Commande \"Stylo\" passée en statut : Livré",
+      "date": "2026-07-25T07:52:06.679Z",
+      "lu": true
+    },
+    {
+      "id": "y5zloyhq",
+      "text": "Commande \"Stylo\" passée en statut : En attente",
+      "date": "2026-07-25T07:52:14.939Z",
+      "lu": true
+    },
+    {
+      "id": "3qcwcbtq",
+      "text": "Commande \"Stylo\" passée en statut : En conception",
+      "date": "2026-07-25T10:58:26.257Z",
+      "lu": true
+    },
+    {
+      "id": "ltrbhrgp",
+      "text": "Nouvelle commande enregistrée : \"bache publicitaire\"",
+      "date": "2026-07-25T12:04:28.021Z",
+      "lu": true
+    },
+    {
+      "id": "h6tchqls",
+      "text": "Commande \"bache publicitaire\" passée en statut : Payée",
+      "date": "2026-07-25T12:05:18.629Z",
+      "lu": true
+    },
+    {
+      "id": "pgoc73i9",
+      "text": "Nouvelle écriture financière (Dépense) : \"leo a pour la machine a impresssion\" (15000 FCFA)",
+      "date": "2026-07-25T12:10:53.769Z",
+      "lu": true
+    },
+    {
+      "id": "voneygul",
+      "text": "Nouvelle écriture financière (Recette) : \"pour les polos\" (150000 FCFA)",
+      "date": "2026-07-25T12:11:13.799Z",
+      "lu": true
+    },
+    {
+      "id": "acm8oteq",
+      "text": "Nouvelle commande enregistrée : \"bache publicitaire\"",
+      "date": "2026-07-28T14:04:16.532Z",
+      "lu": false
+    },
+    {
+      "id": "mixerhim",
+      "text": "Commande \"bache publicitaire\" passée en statut : Payée",
+      "date": "2026-07-28T14:04:30.163Z",
+      "lu": false
+    },
+    {
+      "id": "03jmd3nj",
+      "text": "Nouvelle écriture financière (Dépense) : \"papeir\" (2000 FCFA)",
+      "date": "2026-07-28T14:05:02.496Z",
+      "lu": false
+    },
+    {
+      "id": "hhcqilsc",
+      "text": "Nouvelle commande enregistrée : \"encre\"",
+      "date": "2026-07-28T14:06:39.378Z",
+      "lu": false
+    },
+    {
+      "id": "stphzgxy",
+      "text": "Commande \"encre\" passée en statut : Payée",
+      "date": "2026-07-28T14:06:56.464Z",
+      "lu": false
+    },
+    {
+      "id": "42emxvul",
+      "text": "Commande \"bache publicitaire\" passée en statut : En attente",
+      "date": "2026-07-28T14:17:34.077Z",
+      "lu": false
+    },
+    {
+      "id": "yfxf9mp9",
+      "text": "Commande \"bache publicitaire\" passée en statut : Payée",
+      "date": "2026-07-28T14:17:36.628Z",
+      "lu": false
+    },
+    {
+      "id": "0waddryt",
+      "text": "Commande \"encre\" passée en statut : En attente",
+      "date": "2026-07-28T14:17:40.477Z",
+      "lu": false
+    },
+    {
+      "id": "bbij03yq",
+      "text": "Commande \"encre\" passée en statut : Payée",
+      "date": "2026-07-28T14:17:42.125Z",
+      "lu": false
+    },
+    {
+      "id": "x7rru6si",
+      "text": "Commande \"bache publicitaire\" passée en statut : En attente",
+      "date": "2026-07-28T14:17:43.405Z",
+      "lu": false
+    },
+    {
+      "id": "giftz307",
+      "text": "Commande \"bache publicitaire\" passée en statut : Payée",
+      "date": "2026-07-30T16:09:02.401Z",
+      "lu": false
+    }
+  ]
+}
