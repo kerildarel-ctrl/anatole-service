@@ -542,68 +542,68 @@ function sectionHeader(title, actionHtml) {
 function authShell(innerHtml) {
   return `
     <div class="login-wrapper">
+      <div class="ambient-glow glow-1"></div>
+      <div class="ambient-glow glow-2"></div>
+      
       <!-- Left Side: Visual Showcase -->
-      <div class="login-visual-panel" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 40%, #991b1b 75%, #ea580c 100%); position: relative; overflow: hidden;">
-        <div style="position: absolute; width: 600px; height: 600px; border-radius: 50%; background: rgba(220, 38, 38, 0.15); top: -150px; right: -150px; filter: blur(60px); pointer-events: none;"></div>
-        <div style="position: absolute; width: 500px; height: 500px; border-radius: 50%; background: rgba(234, 88, 12, 0.15); bottom: -150px; left: -150px; filter: blur(60px); pointer-events: none;"></div>
-        <div class="visual-gradient-overlay"></div>
+      <div class="login-visual-panel">
         <div class="visual-content">
-          <div class="visual-logo-container" style="display:flex; flex-direction:column; align-items:center; text-align:center; justify-content:center; width:100%; margin-top:20px; margin-bottom: 20px;">
-            <div style="background:#ffffff; padding:16px 28px; border-radius:24px; box-shadow:0 12px 35px rgba(0,0,0,0.35); display:inline-flex; align-items:center; justify-content:center; margin-bottom:16px; border:1px solid rgba(255,255,255,0.8);">
-              <img src="logo.png" class="visual-logo" style="max-height:120px; max-width:230px; object-fit:contain;" onerror="if(this.src.includes('logo.png')){ this.src='logo.jpeg'; } else if(this.src.includes('logo.jpeg')){ this.src='logo.jpg'; } else { this.style.display='none'; document.getElementById('visual-logo-svg').style.display='block'; }" />
+          <div class="visual-logo-container">
+            <div class="brand-badge">
+              <img src="logo.png" class="visual-logo" onerror="if(this.src.includes('logo.png')){ this.src='logo.jpeg'; } else if(this.src.includes('logo.jpeg')){ this.src='logo.jpg'; } else { this.style.display='none'; document.getElementById('visual-logo-svg').style.display='block'; }" />
+              <svg id="visual-logo-svg" width="50" height="50" viewBox="0 0 100 100" fill="none" style="display:none;">
+                <circle cx="50" cy="50" r="40" fill="#dc2626" />
+                <text x="50" y="58" font-size="28" font-weight="bold" fill="#ffffff" text-anchor="middle">AS</text>
+              </svg>
             </div>
-            <svg id="visual-logo-svg" width="70" height="70" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-bottom: 12px; display:none;">
-              <circle cx="50" cy="50" r="40" fill="#dc2626" />
-              <text x="50" y="58" font-size="28" font-weight="bold" fill="#ffffff" text-anchor="middle">AS</text>
-            </svg>
-            <span style="font-family:'Outfit',sans-serif;font-size:32px;font-weight:900;letter-spacing:0.5px;color:#ffffff;">ANATOLE SERVICE</span>
+            <div class="visual-brand-title">ANATOLE SERVICE</div>
+            <div class="visual-brand-sub">Gestion & Services d'Excellence</div>
           </div>
-          <div style="margin-top: auto; margin-bottom: auto;">
-            <div class="visual-features" style="display:flex; flex-direction:column; gap:16px;">
-              <div class="v-feature-card">
-                <div class="v-card-icon-box" style="background: linear-gradient(135deg, #dc2626, #ea580c);">
-                  <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                    <line x1="18" y1="20" x2="18" y2="10"></line>
-                    <line x1="12" y1="20" x2="12" y2="4"></line>
-                    <line x1="6" y1="20" x2="6" y2="14"></line>
-                  </svg>
-                </div>
-                <div class="v-card-text">
-                  <div class="v-card-title">Rapports & Indicateurs de performance</div>
-                  <div class="v-card-subtitle">Analysez vos performances en temps réel.</div>
-                </div>
+          
+          <div class="visual-features-grid">
+            <div class="v-feature-card">
+              <div class="v-card-icon-box">
+                <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                  <line x1="18" y1="20" x2="18" y2="10"></line>
+                  <line x1="12" y1="20" x2="12" y2="4"></line>
+                  <line x1="6" y1="20" x2="6" y2="14"></line>
+                </svg>
               </div>
-              <div class="v-feature-card">
-                <div class="v-card-icon-box" style="background: linear-gradient(135deg, #dc2626, #ea580c);">
-                  <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                    <polyline points="14 2 14 8 20 8"></polyline>
-                    <line x1="16" y1="13" x2="8" y2="13"></line>
-                    <line x1="16" y1="17" x2="8" y2="17"></line>
-                  </svg>
-                </div>
-                <div class="v-card-text">
-                  <div class="v-card-title">Gestion complète de la facturation</div>
-                  <div class="v-card-subtitle">Suivi, devis, factures et paiements.</div>
-                </div>
-              </div>
-              <div class="v-feature-card">
-                <div class="v-card-icon-box" style="background: linear-gradient(135deg, #dc2626, #ea580c);">
-                  <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                    <line x1="12" y1="22.08" x2="12" y2="12"></line>
-                  </svg>
-                </div>
-                <div class="v-card-text">
-                  <div class="v-card-title">Mouvements de stock & Seuils critiques</div>
-                  <div class="v-card-subtitle">Gardez le contrôle de vos stocks.</div>
-                </div>
+              <div class="v-card-text">
+                <div class="v-card-title">Tableau de bord & Indicateurs</div>
+                <div class="v-card-subtitle">Suivi du CA du jour, créances et performances.</div>
               </div>
             </div>
+            
+            <div class="v-feature-card">
+              <div class="v-card-icon-box">
+                <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                </svg>
+              </div>
+              <div class="v-card-text">
+                <div class="v-card-title">Gestion Devis & Facturation</div>
+                <div class="v-card-subtitle">Calculateurs automatiques et reçus thermiques.</div>
+              </div>
+            </div>
+
+            <div class="v-feature-card">
+              <div class="v-card-icon-box">
+                <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                </svg>
+              </div>
+              <div class="v-card-text">
+                <div class="v-card-title">Gestion de Stock & Alertes</div>
+                <div class="v-card-subtitle">Alertes automatiques de ruptures de stock.</div>
+              </div>
+            </div>
           </div>
-          <div class="visual-footer" style="color: rgba(255,255,255,0.7);">
-            © 2026 ANATOLE SERVICE - Excellence & Services.
+          
+          <div class="visual-footer">
+            © 2026 ANATOLE SERVICE — Tous droits réservés.
           </div>
         </div>
       </div>
@@ -622,42 +622,62 @@ function authShell(innerHtml) {
 
 function renderSetup() {
   return authShell(`
-    <div style="text-align: center; margin-bottom: 20px;">
-      <img src="logo.png" style="max-height: 120px; max-width: 230px; object-fit: contain; margin: 0 auto 14px; display: block;" onerror="if(this.src.includes('logo.png')){ this.src='logo.jpeg'; } else if(this.src.includes('logo.jpeg')){ this.src='logo.jpg'; } else { this.style.display='none'; document.getElementById('setup-logo-svg').style.display='block'; }" />
-      <svg id="setup-logo-svg" width="80" height="80" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 0 auto 14px; display: none;">
-        <circle cx="50" cy="50" r="40" fill="#dc2626" />
-        <text x="50" y="58" font-size="28" font-weight="bold" fill="#ffffff" text-anchor="middle">AS</text>
-      </svg>
-      <h2 style="font-family:'Outfit',sans-serif; font-size: 26px; font-weight: 800; color: #dc2626; margin: 0; letter-spacing: -0.5px;">Configuration initiale</h2>
-      <p style="color: var(--mute); font-size: 12.5px; margin: 6px 0 0; line-height: 1.4;">Créez le premier compte administrateur ANATOLE SERVICE.</p>
+    <div class="auth-header">
+      <div class="brand-badge">
+        <img src="logo.png" class="card-logo" onerror="if(this.src.includes('logo.png')){ this.src='logo.jpeg'; } else if(this.src.includes('logo.jpeg')){ this.src='logo.jpg'; } else { this.style.display='none'; document.getElementById('setup-logo-svg').style.display='block'; }" />
+        <svg id="setup-logo-svg" width="50" height="50" viewBox="0 0 100 100" fill="none" style="display: none;">
+          <circle cx="50" cy="50" r="40" fill="#dc2626" />
+          <text x="50" y="58" font-size="28" font-weight="bold" fill="#ffffff" text-anchor="middle">AS</text>
+        </svg>
+      </div>
+      <h2 class="auth-title">Configuration initiale</h2>
+      <p class="auth-subtitle">Créez le premier compte administrateur ANATOLE SERVICE.</p>
     </div>
-    ${state.authError ? `<p style="color:var(--red);font-size:12.5px;margin-bottom:12px;text-align:center;">${esc(state.authError)}</p>` : ""}
-    <div class="field"><label>Ton nom</label><input id="su-nom" /></div>
-    <div class="field"><label>Identifiant de connexion</label><input id="su-id" autocapitalize="off" /></div>
-    <div class="field"><label>Mot de passe</label><input id="su-pass" type="password" /></div>
-    <div class="field"><label>Confirmer le mot de passe</label><input id="su-pass2" type="password" onkeydown="if(event.key==='Enter')submitSetup()" /></div>
-    <button class="btn btn-accent" style="width:100%;justify-content:center;background:linear-gradient(135deg, #dc2626, #ea580c);margin-bottom:16px;" onclick="submitSetup()">Créer le compte et démarrer</button>
+    ${state.authError ? `<div class="auth-error-msg">${esc(state.authError)}</div>` : ""}
+    
+    <div class="field">
+      <label>Ton nom</label>
+      <input id="su-nom" placeholder="Ex: Anatole" />
+    </div>
+    <div class="field">
+      <label>Identifiant de connexion</label>
+      <input id="su-id" placeholder="Ex: admin" autocapitalize="off" />
+    </div>
+    <div class="field">
+      <label>Mot de passe</label>
+      <input id="su-pass" type="password" placeholder="•••••••••" />
+    </div>
+    <div class="field">
+      <label>Confirmer le mot de passe</label>
+      <input id="su-pass2" type="password" placeholder="•••••••••" onkeydown="if(event.key==='Enter')submitSetup()" />
+    </div>
+    
+    <button class="btn btn-auth-submit" onclick="submitSetup()">
+      Créer le compte & démarrer ➔
+    </button>
   `);
 }
 
 function renderLogin() {
   return authShell(`
-    <div style="text-align: center; margin-bottom: 20px;">
-      <img src="logo.png" style="max-height: 120px; max-width: 230px; object-fit: contain; margin: 0 auto 14px; display: block;" onerror="if(this.src.includes('logo.png')){ this.src='logo.jpeg'; } else if(this.src.includes('logo.jpeg')){ this.src='logo.jpg'; } else { this.style.display='none'; document.getElementById('card-logo-svg').style.display='block'; }" />
-      <svg id="card-logo-svg" width="90" height="90" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 0 auto 14px; display: none;">
-        <circle cx="50" cy="50" r="40" fill="#dc2626" />
-        <text x="50" y="58" font-size="28" font-weight="bold" fill="#ffffff" text-anchor="middle">AS</text>
-      </svg>
-      <h2 style="font-family:'Outfit',sans-serif; font-size: 26px; font-weight: 800; color: #dc2626; margin: 0; letter-spacing: -0.5px;">Connexion</h2>
-      <p style="color: var(--mute); font-size: 12.5px; margin: 6px 0 0; line-height: 1.4;">Bienvenue chez ANATOLE SERVICE ! Connectez-vous pour accéder à votre espace.</p>
+    <div class="auth-header">
+      <div class="brand-badge">
+        <img src="logo.png" class="card-logo" onerror="if(this.src.includes('logo.png')){ this.src='logo.jpeg'; } else if(this.src.includes('logo.jpeg')){ this.src='logo.jpg'; } else { this.style.display='none'; document.getElementById('card-logo-svg').style.display='block'; }" />
+        <svg id="card-logo-svg" width="50" height="50" viewBox="0 0 100 100" fill="none" style="display: none;">
+          <circle cx="50" cy="50" r="40" fill="#dc2626" />
+          <text x="50" y="58" font-size="28" font-weight="bold" fill="#ffffff" text-anchor="middle">AS</text>
+        </svg>
+      </div>
+      <h2 class="auth-title">Connexion</h2>
+      <p class="auth-subtitle">Bienvenue chez ANATOLE SERVICE ! Connectez-vous à votre espace.</p>
     </div>
     
-    ${state.authError ? `<p style="color:var(--red);font-size:12.5px;margin-bottom:12px;text-align:center;">${esc(state.authError)}</p>` : ""}
+    ${state.authError ? `<div class="auth-error-msg">${esc(state.authError)}</div>` : ""}
     
     <div class="field">
       <label>Identifiant</label>
       <div class="input-with-icon">
-        <span class="prefix-icon" style="color: #dc2626;">
+        <span class="prefix-icon">
           <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
             <circle cx="12" cy="7" r="4"></circle>
@@ -670,7 +690,7 @@ function renderLogin() {
     <div class="field">
       <label>Mot de passe</label>
       <div class="input-with-icon">
-        <span class="prefix-icon" style="color: #dc2626;">
+        <span class="prefix-icon">
           <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
             <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
             <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
@@ -686,26 +706,21 @@ function renderLogin() {
       </div>
     </div>
 
-    <div class="login-options-row" style="margin-bottom: 20px;">
-      <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-weight:500;">
-        <input type="checkbox" style="width:15px; height:15px; border-radius:4px; accent-color:#dc2626;" checked />
-        Se souvenir de moi
+    <div class="login-options-row">
+      <label style="display:flex; align-items:center; gap:8px; cursor:pointer; color: rgba(241,245,249,0.85); font-weight: 500;">
+        <input type="checkbox" id="remember-me" checked style="accent-color: #dc2626; width:16px; height:16px;" /> Se souvenir de moi
       </label>
     </div>
 
-    <button class="btn btn-accent" style="width:100%; justify-content:center; gap:8px; font-size:14.5px; padding:12px; border-radius:12px; background:linear-gradient(135deg, #dc2626, #ea580c); margin-bottom: 20px;" onclick="submitLogin()">
-      Se connecter <span style="font-size:16px;">→</span>
+    <button class="btn btn-auth-submit" onclick="submitLogin()">
+      Se connecter ➔
     </button>
-
-    <div style="display:flex; align-items:center; justify-content:center; gap:8px; padding:10px; border:1px solid var(--line); border-radius:12px; color:var(--mute); font-size:12.5px; font-weight:500; background:rgba(220, 38, 38, 0.03);">
-      <svg width="15" height="15" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+    
+    <div class="auth-footer-badge">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
       </svg>
-      Connexion sécurisée ANATOLE SERVICE
-    </div>
-    
-    <div style="text-align:center; font-size:11px; color:var(--mute); margin-top:28px; font-weight:600; letter-spacing:0.5px;">
-      Réalisé par <span style="color:var(--indigo);">MK Prog</span>
+      Accès sécurisé ANATOLE SERVICE
     </div>
   `);
 }
