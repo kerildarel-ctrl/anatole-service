@@ -442,8 +442,12 @@ COLLECTIONS.forEach((col) => {
       }
 
       const merged = { ...req.body };
-      if (col === "commandes" && merged.statut === "Payée") {
-        merged.montantPaye = merged.montant || oldItem.montant;
+      if (col === "commandes") {
+        if (merged.statut === "Payée") {
+          merged.montantPaye = merged.montant || oldItem.montant;
+        } else if (merged.statut === "En attente") {
+          merged.montantPaye = 0;
+        }
       }
       
       await updateRow(col, req.params.id, merged);
@@ -459,6 +463,16 @@ COLLECTIONS.forEach((col) => {
               montant: Number(req.body.montant || oldItem.montant) || 0,
               date: getLocalTodayISO()
             });
+          } else if (req.body.statut === "En attente" && oldItem.statut === "Payée") {
+            try {
+              const allFinance = await getData();
+              const target = (allFinance.finance || []).find(f => f.type === "Recette" && f.description && f.description.includes(oldItem.designation || ""));
+              if (target && target.id) {
+                await deleteRow("finance", target.id);
+              }
+            } catch (errFin) {
+              console.error("Error removing finance entry on revert:", errFin);
+            }
           }
         } else if (col === "stock" && req.body.quantite !== undefined) {
           const newQty = Number(req.body.quantite);
