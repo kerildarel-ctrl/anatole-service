@@ -247,10 +247,35 @@ app.post("/api/logout", (req, res) => {
   });
 });
 
+async function syncPaidOrdersToFinance(data) {
+  if (!data || !data.commandes || !data.finance) return;
+  const paidCmds = data.commandes.filter(c => c.statut === "Payée" || (Number(c.montantPaye) >= Number(c.montant) && Number(c.montant) > 0));
+  for (const c of paidCmds) {
+    if (!c.designation) continue;
+    const exists = data.finance.some(f => f.type === "Recette" && f.description && f.description.toLowerCase().includes(c.designation.toLowerCase()));
+    if (!exists) {
+      const finRow = {
+        id: genId(),
+        type: "Recette",
+        description: `Paiement commande : ${c.designation}`,
+        montant: Number(c.montant || c.montantPaye) || 0,
+        date: (c.dateCreation || getLocalTodayISO()).slice(0, 10)
+      };
+      try {
+        await insertRow("finance", finRow);
+        data.finance.push(finRow);
+      } catch (e) {
+        console.error("Error auto-syncing paid order to finance:", e);
+      }
+    }
+  }
+}
+
 /* ---------------- /api/all (sanitized) ---------------- */
 app.get("/api/all", async (req, res) => {
   try {
     const data = await getData();
+    await syncPaidOrdersToFinance(data);
     res.json({ ...data, employes: data.employes.map(sanitizeEmploye), version: "1.1.1" });
   } catch (err) {
     res.status(500).json({ error: err.message });

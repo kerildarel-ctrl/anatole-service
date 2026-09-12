@@ -1722,7 +1722,7 @@ function renderFinance() {
   const q = state.searchQuery.toLowerCase();
   
   const targetDate = state.financeDate || todayISO();
-  const dayList = state.data.finance.filter(f => f.date === targetDate);
+  const dayList = state.data.finance.filter(f => (f.date || "").slice(0, 10) === targetDate);
   const list = dayList.filter(f => f.description.toLowerCase().includes(q));
   
   const recettes = list.filter((f) => f.type === "Recette").reduce((a, f) => a + f.montant, 0);
@@ -1782,7 +1782,7 @@ function renderFinance() {
       <thead><tr><th>Date</th><th>Description</th><th>Type</th><th style="text-align:right;">Montant</th></tr></thead>
       <tbody>
         ${list.slice().reverse().map((f) => `<tr>
-          <td class="mono" style="color:var(--mute)">${esc(f.date)}</td>
+          <td class="mono" style="color:var(--mute)">${esc((f.date || "").slice(0, 10))}</td>
           <td style="font-weight:600;">${esc(f.description)}</td>
           <td><span class="badge" style="background:${f.type === "Recette" ? "#177A671A" : "#D6432B1A"};color:${f.type === "Recette" ? "var(--teal)" : "var(--red)"}">${f.type}</span></td>
           <td class="mono" style="text-align:right;font-weight:700;color:${f.type === "Recette" ? "var(--teal)" : "var(--red)"}">${f.type === "Recette" ? "+" : "-"}${fmt(f.montant)}</td>
