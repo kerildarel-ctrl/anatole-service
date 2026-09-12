@@ -733,10 +733,9 @@ function renderDashboard() {
   const startOfWeek = new Date(startOfDay); startOfWeek.setDate(startOfDay.getDate() - startOfDay.getDay());
   const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
 
-  const events = [
-    ...(d.ventes || []).map((v) => ({ date: parseLocalDate(v.date || v.dateCreation), montant: Number(v.montant) || 0 })),
-    ...(d.finance || []).filter((f) => f.type === "Recette").map((f) => ({ date: parseLocalDate(f.date), montant: Number(f.montant) || 0 })),
-  ];
+  const events = (d.finance || [])
+    .filter((f) => f.type === "Recette")
+    .map((f) => ({ date: parseLocalDate(f.date), montant: Number(f.montant) || 0 }));
   const sum = (from) => events.filter((e) => e.date >= from).reduce((a, e) => a + (e.montant || 0), 0);
 
   const enAttente = d.commandes.filter((c) => c.statut === "En attente").length;
@@ -1526,9 +1525,20 @@ window.openCommandeModal = (id) => {
 };
 
 window.saveCommande = (id, isEdit) => {
+  const submitBtn = document.querySelector("#modal-container .btn-accent");
+  if (submitBtn) {
+    if (submitBtn.disabled) return;
+    submitBtn.disabled = true;
+    submitBtn.innerText = "Enregistrement...";
+  }
+
   const clientId = document.getElementById("f-client").value;
   let designation = document.getElementById("f-desig").value.trim();
-  if (!designation) { alert("Désignation requise."); return; }
+  if (!designation) {
+    alert("Désignation requise.");
+    if (submitBtn) { submitBtn.disabled = false; submitBtn.innerText = "Enregistrer"; }
+    return;
+  }
   
   if (isEdit) {
     if (!designation.endsWith(" (Modifiée)")) {
@@ -1536,27 +1546,47 @@ window.saveCommande = (id, isEdit) => {
     }
   }
 
+  const montant = Number(document.getElementById("f-montant").value) || 0;
+  const montantPaye = Number(document.getElementById("f-paye").value) || 0;
+
+  let statut = "En attente";
+  if (isEdit) {
+    const existing = state.data.commandes.find(x => x.id === id);
+    statut = existing ? existing.statut : "En attente";
+    if (statut === "En attente" && montantPaye >= montant && montant > 0) {
+      statut = "Payée";
+    }
+  } else {
+    if (montantPaye >= montant && montant > 0) {
+      statut = "Payée";
+    }
+  }
+
   const body = {
     clientId,
     designation,
-    montant: Number(document.getElementById("f-montant").value) || 0,
-    montantPaye: Number(document.getElementById("f-paye").value) || 0,
+    montant,
+    montantPaye,
     dateLivraison: document.getElementById("f-livraison").value,
     urgence: document.getElementById("f-urgence").value,
+    statut
   };
 
   mutate(async () => {
-    if (isEdit) {
-      await apiUpdate("commandes", id, body);
-    } else {
-      await apiCreate("commandes", {
-        id,
-        ...body,
-        statut: "En attente",
-        dateCreation: new Date().toISOString()
-      });
+    try {
+      if (isEdit) {
+        await apiUpdate("commandes", id, body);
+      } else {
+        await apiCreate("commandes", {
+          id,
+          ...body,
+          dateCreation: new Date().toISOString()
+        });
+      }
+      closeModal();
+    } finally {
+      if (submitBtn) { submitBtn.disabled = false; submitBtn.innerText = "Enregistrer"; }
     }
-    closeModal();
   });
 };
 
@@ -1704,15 +1734,29 @@ window.openVenteModal = () => {
 };
 
 window.saveVente = () => {
+  const submitBtn = document.querySelector("#modal-container .btn-accent");
+  if (submitBtn) {
+    if (submitBtn.disabled) return;
+    submitBtn.disabled = true;
+    submitBtn.innerText = "Enregistrement...";
+  }
+
   const description = document.getElementById("f-desc").value.trim();
-  if (!description) return;
+  if (!description) {
+    if (submitBtn) { submitBtn.disabled = false; submitBtn.innerText = "Enregistrer la vente"; }
+    return;
+  }
   const montant = Number(document.getElementById("f-montant").value) || 0;
   const body = { id: uid(), clientId: document.getElementById("f-client").value, description, montant, date: todayISO() };
   mutate(async () => {
-    await apiCreate("ventes", body);
-    // Automatically record as an income in Finance!
-    await apiCreate("finance", { id: uid(), type: "Recette", description: "Vente directe : " + description, montant, date: todayISO() });
-    closeModal();
+    try {
+      await apiCreate("ventes", body);
+      // Automatically record as an income in Finance!
+      await apiCreate("finance", { id: uid(), type: "Recette", description: "Vente directe : " + description, montant, date: todayISO() });
+      closeModal();
+    } finally {
+      if (submitBtn) { submitBtn.disabled = false; submitBtn.innerText = "Enregistrer la vente"; }
+    }
   });
 };
 

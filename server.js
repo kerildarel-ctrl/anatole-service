@@ -249,16 +249,45 @@ app.post("/api/logout", (req, res) => {
 
 async function syncPaidOrdersToFinance(data) {
   if (!data || !data.commandes || !data.finance) return;
+
+  // 1. Remove duplicate finance entries for the same order ID
+  const seenCmdFinance = new Set();
+  const toDeleteFinanceIds = [];
+  for (const f of data.finance) {
+    if (f.type === "Recette" && f.description) {
+      const match = f.description.match(/\[CMD:([^\]]+)\]/) || f.description.match(/Paiement commande #([^\s:]+)/);
+      if (match && match[1]) {
+        const cmdId = match[1];
+        if (seenCmdFinance.has(cmdId)) {
+          toDeleteFinanceIds.push(f.id);
+        } else {
+          seenCmdFinance.add(cmdId);
+        }
+      }
+    }
+  }
+
+  for (const finId of toDeleteFinanceIds) {
+    try {
+      await deleteRow("finance", finId);
+      data.finance = data.finance.filter(f => f.id !== finId);
+    } catch (e) {
+      console.error("Error removing duplicate finance row:", e);
+    }
+  }
+
+  // 2. Auto-sync missing paid orders into finance with strict [CMD:id] tag
   const paidCmds = data.commandes.filter(c => c.statut === "Payée" || (Number(c.montantPaye) >= Number(c.montant) && Number(c.montant) > 0));
   for (const c of paidCmds) {
     if (!c.id) continue;
-    const exists = data.finance.some(f => f.type === "Recette" && f.description && (f.description.includes(c.id) || (c.designation && f.description.toLowerCase().includes(c.designation.toLowerCase()))));
+    const refTag = `[CMD:${c.id}]`;
+    const exists = data.finance.some(f => f.type === "Recette" && f.description && (f.description.includes(refTag) || f.description.includes(c.id)));
     if (!exists) {
       const finRow = {
         id: genId(),
         type: "Recette",
-        description: `Paiement commande #${c.id} : ${c.designation || "Commande"}`,
-        montant: Number(c.montant || c.montantPaye) || 0,
+        description: `Paiement commande #${c.id} ${refTag} : ${c.designation || "Commande"}`,
+        montant: Number(c.montantPaye || c.montant) || 0,
         date: (c.dateCreation || getLocalTodayISO()).slice(0, 10)
       };
       try {
@@ -405,12 +434,13 @@ COLLECTIONS.forEach((col) => {
       if (col === "commandes" && item.statut === "Payée") {
         item.montantPaye = item.montant;
         const allData = await getData();
-        const exists = (allData.finance || []).some(f => f.type === "Recette" && f.description && (f.description.includes(item.id) || (item.designation && f.description.toLowerCase().includes(item.designation.toLowerCase()))));
+        const refTag = `[CMD:${item.id}]`;
+        const exists = (allData.finance || []).some(f => f.type === "Recette" && f.description && (f.description.includes(refTag) || f.description.includes(item.id)));
         if (!exists) {
           await insertRow("finance", {
             id: genId(),
             type: "Recette",
-            description: `Paiement commande #${item.id} : ${item.designation || "Sans nom"}`,
+            description: `Paiement commande #${item.id} ${refTag} : ${item.designation || "Sans nom"}`,
             montant: Number(item.montant) || 0,
             date: getLocalTodayISO()
           });
@@ -484,14 +514,15 @@ COLLECTIONS.forEach((col) => {
       if (oldItem) {
         if (col === "commandes" && req.body.statut && oldItem.statut !== req.body.statut) {
           await addNotification(`Commande "${oldItem.designation}" passée en statut : ${req.body.statut}`);
+          const refTag = `[CMD:${oldItem.id}]`;
           if (req.body.statut === "Payée" && oldItem.statut !== "Payée") {
             const allData = await getData();
-            const exists = (allData.finance || []).some(f => f.type === "Recette" && f.description && (f.description.includes(oldItem.id) || (oldItem.designation && f.description.toLowerCase().includes(oldItem.designation.toLowerCase()))));
+            const exists = (allData.finance || []).some(f => f.type === "Recette" && f.description && (f.description.includes(refTag) || f.description.includes(oldItem.id)));
             if (!exists) {
               await insertRow("finance", {
                 id: genId(),
                 type: "Recette",
-                description: `Paiement commande #${oldItem.id} : ${oldItem.designation || "Sans nom"}`,
+                description: `Paiement commande #${oldItem.id} ${refTag} : ${oldItem.designation || "Sans nom"}`,
                 montant: Number(req.body.montant || oldItem.montant) || 0,
                 date: getLocalTodayISO()
               });
@@ -499,7 +530,7 @@ COLLECTIONS.forEach((col) => {
           } else if (req.body.statut === "En attente" && oldItem.statut === "Payée") {
             try {
               const allFinance = await getData();
-              const targets = (allFinance.finance || []).filter(f => f.type === "Recette" && f.description && (f.description.includes(oldItem.id) || (oldItem.designation && f.description.toLowerCase().includes(oldItem.designation.toLowerCase()))));
+              const targets = (allFinance.finance || []).filter(f => f.type === "Recette" && f.description && (f.description.includes(refTag) || f.description.includes(oldItem.id)));
               for (const target of targets) {
                 await deleteRow("finance", target.id);
               }
