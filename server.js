@@ -277,7 +277,7 @@ async function syncPaidOrdersToFinance(data) {
   }
 
   // 2. Auto-sync missing paid orders into finance with strict [CMD:id] tag
-  const paidCmds = data.commandes.filter(c => c.statut === "Payée" || (Number(c.montantPaye) >= Number(c.montant) && Number(c.montant) > 0));
+  const paidCmds = data.commandes.filter(c => c.statut === "Payée");
   for (const c of paidCmds) {
     if (!c.id) continue;
     const refTag = `[CMD:${c.id}]`;

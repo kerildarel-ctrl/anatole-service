@@ -1547,19 +1547,13 @@ window.saveCommande = (id, isEdit) => {
   }
 
   const montant = Number(document.getElementById("f-montant").value) || 0;
-  const montantPaye = Number(document.getElementById("f-paye").value) || 0;
 
   let statut = "En attente";
+  let montantPaye = 0;
   if (isEdit) {
     const existing = state.data.commandes.find(x => x.id === id);
     statut = existing ? existing.statut : "En attente";
-    if (statut === "En attente" && montantPaye >= montant && montant > 0) {
-      statut = "Payée";
-    }
-  } else {
-    if (montantPaye >= montant && montant > 0) {
-      statut = "Payée";
-    }
+    montantPaye = existing ? Number(existing.montantPaye) || 0 : 0;
   }
 
   const body = {
