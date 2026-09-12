@@ -286,7 +286,7 @@ async function syncPaidOrdersToFinance(data) {
       const finRow = {
         id: genId(),
         type: "Recette",
-        description: `Paiement commande #${c.id} ${refTag} : ${c.designation || "Commande"}`,
+        description: `Paiement commande : ${c.designation || "Commande"} [CMD:${c.id}]`,
         montant: Number(c.montantPaye || c.montant) || 0,
         date: (c.dateCreation || getLocalTodayISO()).slice(0, 10)
       };
@@ -440,7 +440,7 @@ COLLECTIONS.forEach((col) => {
           await insertRow("finance", {
             id: genId(),
             type: "Recette",
-            description: `Paiement commande #${item.id} ${refTag} : ${item.designation || "Sans nom"}`,
+            description: `Paiement commande : ${item.designation || "Sans nom"} [CMD:${item.id}]`,
             montant: Number(item.montant) || 0,
             date: getLocalTodayISO()
           });
@@ -522,7 +522,7 @@ COLLECTIONS.forEach((col) => {
               await insertRow("finance", {
                 id: genId(),
                 type: "Recette",
-                description: `Paiement commande #${oldItem.id} ${refTag} : ${oldItem.designation || "Sans nom"}`,
+                description: `Paiement commande : ${oldItem.designation || "Sans nom"} [CMD:${oldItem.id}]`,
                 montant: Number(req.body.montant || oldItem.montant) || 0,
                 date: getLocalTodayISO()
               });
