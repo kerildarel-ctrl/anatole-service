@@ -251,13 +251,13 @@ async function syncPaidOrdersToFinance(data) {
   if (!data || !data.commandes || !data.finance) return;
   const paidCmds = data.commandes.filter(c => c.statut === "Payée" || (Number(c.montantPaye) >= Number(c.montant) && Number(c.montant) > 0));
   for (const c of paidCmds) {
-    if (!c.designation) continue;
-    const exists = data.finance.some(f => f.type === "Recette" && f.description && f.description.toLowerCase().includes(c.designation.toLowerCase()));
+    if (!c.id) continue;
+    const exists = data.finance.some(f => f.type === "Recette" && f.description && (f.description.includes(c.id) || (c.designation && f.description.toLowerCase().includes(c.designation.toLowerCase()))));
     if (!exists) {
       const finRow = {
         id: genId(),
         type: "Recette",
-        description: `Paiement commande : ${c.designation}`,
+        description: `Paiement commande #${c.id} : ${c.designation || "Commande"}`,
         montant: Number(c.montant || c.montantPaye) || 0,
         date: (c.dateCreation || getLocalTodayISO()).slice(0, 10)
       };
@@ -404,13 +404,17 @@ COLLECTIONS.forEach((col) => {
       const item = { ...req.body, id: itemId };
       if (col === "commandes" && item.statut === "Payée") {
         item.montantPaye = item.montant;
-        await insertRow("finance", {
-          id: genId(),
-          type: "Recette",
-          description: `Paiement commande : ${item.designation || "Sans nom"}`,
-          montant: Number(item.montant) || 0,
-          date: getLocalTodayISO()
-        });
+        const allData = await getData();
+        const exists = (allData.finance || []).some(f => f.type === "Recette" && f.description && (f.description.includes(item.id) || (item.designation && f.description.toLowerCase().includes(item.designation.toLowerCase()))));
+        if (!exists) {
+          await insertRow("finance", {
+            id: genId(),
+            type: "Recette",
+            description: `Paiement commande #${item.id} : ${item.designation || "Sans nom"}`,
+            montant: Number(item.montant) || 0,
+            date: getLocalTodayISO()
+          });
+        }
       }
       
       await insertRow(col, item);
@@ -481,18 +485,22 @@ COLLECTIONS.forEach((col) => {
         if (col === "commandes" && req.body.statut && oldItem.statut !== req.body.statut) {
           await addNotification(`Commande "${oldItem.designation}" passée en statut : ${req.body.statut}`);
           if (req.body.statut === "Payée" && oldItem.statut !== "Payée") {
-            await insertRow("finance", {
-              id: genId(),
-              type: "Recette",
-              description: `Paiement commande : ${oldItem.designation || "Sans nom"}`,
-              montant: Number(req.body.montant || oldItem.montant) || 0,
-              date: getLocalTodayISO()
-            });
+            const allData = await getData();
+            const exists = (allData.finance || []).some(f => f.type === "Recette" && f.description && (f.description.includes(oldItem.id) || (oldItem.designation && f.description.toLowerCase().includes(oldItem.designation.toLowerCase()))));
+            if (!exists) {
+              await insertRow("finance", {
+                id: genId(),
+                type: "Recette",
+                description: `Paiement commande #${oldItem.id} : ${oldItem.designation || "Sans nom"}`,
+                montant: Number(req.body.montant || oldItem.montant) || 0,
+                date: getLocalTodayISO()
+              });
+            }
           } else if (req.body.statut === "En attente" && oldItem.statut === "Payée") {
             try {
               const allFinance = await getData();
-              const target = (allFinance.finance || []).find(f => f.type === "Recette" && f.description && f.description.includes(oldItem.designation || ""));
-              if (target && target.id) {
+              const targets = (allFinance.finance || []).filter(f => f.type === "Recette" && f.description && (f.description.includes(oldItem.id) || (oldItem.designation && f.description.toLowerCase().includes(oldItem.designation.toLowerCase()))));
+              for (const target of targets) {
                 await deleteRow("finance", target.id);
               }
             } catch (errFin) {
@@ -507,7 +515,6 @@ COLLECTIONS.forEach((col) => {
           }
         }
       }
-      res.json({ ok: true });
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
