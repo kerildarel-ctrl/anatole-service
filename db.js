@@ -30,29 +30,39 @@ function normalizeRow(row) {
 
 // Generic read operations
 async function fetchTable(table) {
-  try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?select=*`, { headers });
-    if (!res.ok) {
-      console.warn(`Supabase warning: could not fetch table "${table}" (status ${res.status}).`);
-      return [];
+  let attempts = 0;
+  while (attempts < 3) {
+    attempts++;
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?select=*`, { headers });
+      if (!res.ok) {
+        console.warn(`Supabase warning: could not fetch table "${table}" (status ${res.status}).`);
+        return [];
+      }
+      const data = await res.json();
+      return Array.isArray(data) ? data.map(normalizeRow) : [];
+    } catch (err) {
+      console.error(`Supabase connection attempt ${attempts} failed on table "${table}":`, err.message || err);
+      if (attempts >= 3) return [];
+      await new Promise(r => setTimeout(r, 500));
     }
-    const data = await res.json();
-    return Array.isArray(data) ? data.map(normalizeRow) : [];
-  } catch (err) {
-    console.error(`Supabase connection error on table "${table}":`, err);
-    return [];
   }
 }
 
 async function getRow(table, id) {
-  try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?id=eq.${id}&select=*`, { headers });
-    if (!res.ok) return null;
-    const data = await res.json();
-    return data && data.length > 0 ? normalizeRow(data[0]) : null;
-  } catch (err) {
-    console.error(`Error fetching row from "${table}" with ID "${id}":`, err);
-    return null;
+  let attempts = 0;
+  while (attempts < 3) {
+    attempts++;
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?id=eq.${id}&select=*`, { headers });
+      if (!res.ok) return null;
+      const data = await res.json();
+      return data && data.length > 0 ? normalizeRow(data[0]) : null;
+    } catch (err) {
+      console.error(`Error fetching row attempt ${attempts} from "${table}" with ID "${id}":`, err.message || err);
+      if (attempts >= 3) return null;
+      await new Promise(r => setTimeout(r, 500));
+    }
   }
 }
 
