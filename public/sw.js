@@ -5,7 +5,10 @@ const ASSETS_TO_CACHE = [
   "/style.css?v=1.1.2",
   "/app.js?v=1.1.2",
   "/manifest.json",
-  "/logo.png"
+  "/icon-192.png",
+  "/icon-512.png",
+  "/screenshot-desktop.png",
+  "/screenshot-mobile.png"
 ];
 
 self.addEventListener("install", (event) => {
