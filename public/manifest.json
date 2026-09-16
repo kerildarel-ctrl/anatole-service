@@ -1,16 +1,25 @@
 {
+  "id": "/",
   "name": "Anatole Service",
   "short_name": "Anatole",
-  "description": "Gestion & Pressing Anatole Service",
+  "description": "Application de gestion de pressing, devis, clients, stock et finance pour Anatole Service.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#0f172a",
   "theme_color": "#0284c7",
   "orientation": "any",
+  "categories": ["business", "finance", "productivity"],
   "icons": [
     {
       "src": "logo.png",
       "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "logo.png",
+      "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     }
