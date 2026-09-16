@@ -6,22 +6,68 @@
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
   "background_color": "#0f172a",
   "theme_color": "#0284c7",
   "orientation": "any",
+  "dir": "ltr",
+  "lang": "fr-FR",
+  "prefer_related_applications": false,
   "categories": ["business", "finance", "productivity"],
   "icons": [
     {
       "src": "logo.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     },
     {
       "src": "logo.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Commandes",
+      "short_name": "Commandes",
+      "description": "Voir les commandes",
+      "url": "/?tab=commandes"
+    },
+    {
+      "name": "Finance",
+      "short_name": "Finance",
+      "description": "Voir la comptabilité",
+      "url": "/?tab=finance"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "logo.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Tableau de bord"
+    },
+    {
+      "src": "logo.png",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Mobile"
     }
   ]
 }
