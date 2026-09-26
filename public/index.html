@@ -13,19 +13,24 @@
 <link rel="shortcut icon" type="image/png" href="logo.png" />
 <link rel="apple-touch-icon" href="logo.png" />
 <link rel="manifest" href="manifest.json" />
-<link rel="stylesheet" href="style.css?v=1.1.2" />
+<link rel="stylesheet" href="style.css?v=1.2.0" />
 </head>
 <body>
   <div id="root">
     <div class="boot">Connexion au serveur…</div>
   </div>
-  <script src="app.js?v=1.1.2"></script>
   <script>
     if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(err => console.log('SW reg error:', err));
+      navigator.serviceWorker.getRegistrations().then(registrations => {
+        for (let r of registrations) r.unregister();
+      });
+    }
+    if ('caches' in window) {
+      caches.keys().then(keys => {
+        for (let k of keys) caches.delete(k);
       });
     }
   </script>
+  <script src="app.js?v=1.2.0"></script>
 </body>
 </html>
