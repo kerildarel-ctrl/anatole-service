@@ -19,18 +19,6 @@
   <div id="root">
     <div class="boot">Connexion au serveur…</div>
   </div>
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.getRegistrations().then(registrations => {
-        for (let r of registrations) r.unregister();
-      });
-    }
-    if ('caches' in window) {
-      caches.keys().then(keys => {
-        for (let k of keys) caches.delete(k);
-      });
-    }
-  </script>
   <script src="app.js?v=1.2.0"></script>
 </body>
 </html>
