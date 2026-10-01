@@ -2193,6 +2193,7 @@ window.generateReportPDF = () => {
   
   html += "<div style='margin-top: 50px; text-align: center; font-size: 11px; color: #94a3b8;'>";
   html += "  Généré automatiquement par ANATOLE SERVICE · " + new Date().toLocaleString("fr-FR");
+  html += "  <div style='margin-top: 6px; font-size: 10px; color: #cbd5e1; font-weight: 500; letter-spacing: 0.5px;'>Réalisé par MK Prog</div>";
   html += "</div>";
   
   html += "</div>";
